@@ -6,13 +6,32 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  ALIYUN_REGISTRY: "${{ secrets.ALIYUN_REGISTRY }}"
+  ALIYUN_NAME_SPACE: "${{ secrets.ALIYUN_NAME_SPACE }}"
+  ALIYUN_REGISTRY_USER: "${{ secrets.ALIYUN_REGISTRY_USER }}"
+  ALIYUN_REGISTRY_PASSWORD: "${{ secrets.ALIYUN_REGISTRY_PASSWORD }}"
+  IMAGE_VERSION: "v0.1.6"
+
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      -
+        name: Checkout
+        uses: actions/checkout@v4
+      -
+        name: Login Aliyun
+        run: 
+          docker login -u $ALIYUN_REGISTRY_USER -p $ALIYUN_REGISTRY_PASSWORD $ALIYUN_REGISTRY
+      -
+        name: Build and Push
+        run: |
+          docker pull onerahmet/openai-whisper-asr-webservice:v1.8.2
+          docker tag onerahmet/openai-whisper-asr-webservice:v1.8.2 $ALIYUN_REGISTRY/$ALIYUN_NAME_SPACE/openai-whisper-asr-webservice:v1.8.2
+          docker push $ALIYUN_REGISTRY/$ALIYUN_NAME_SPACE/openai-whisper-asr-webservice:v1.8.2
+          
+
+
+
+       
