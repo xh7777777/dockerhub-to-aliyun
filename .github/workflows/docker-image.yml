@@ -28,8 +28,9 @@ jobs:
         name: Build and Push
         run: |
           docker pull onerahmet/openai-whisper-asr-webservice:v1.8.2
-          docker tag onerahmet/openai-whisper-asr-webservice:v1.8.2 $ALIYUN_REGISTRY/$ALIYUN_NAME_SPACE/openai-whisper-asr-webservice:v1.8.2
-          docker push $ALIYUN_REGISTRY/$ALIYUN_NAME_SPACE/openai-whisper-asr-webservice:v1.8.2
+          docker push onerahmet/openai-whisper-asr-webservice:v1.8.2
+          docker tag onerahmet/openai-whisper-asr-webservice:v1.8.2 ${ALIYUN_REGISTRY}/${ALIYUN_NAME_SPACE}/openai-whisper-asr-webservice:v1.8.2
+          docker push ${ALIYUN_REGISTRY}/${ALIYUN_NAME_SPACE}/openai-whisper-asr-webservice:v1.8.2
           
 
 
